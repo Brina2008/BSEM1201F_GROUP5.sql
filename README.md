@@ -153,8 +153,8 @@ Each database includes **20 records** per table. Data reflects realistic Sierra 
 | `README.md` | Project documentation |
 
 
-## Author
+## Authors
 
-**Project:** Public Health Clinic Records System
-**Tool:** MySQL
-**Purpose:** Academic / Learning — SQL database design and querying
+* Sabrina Kandeh
+* Ameynor Salma Kamara
+* Alfreda Victoria Dumbuya
