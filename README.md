@@ -5,14 +5,19 @@ A structured MySQL database project for managing patient records, appointments, 
 
 ## 📋 Table of Contents
 
+- [Author](#author)
 - [Project Overview](#project-overview)
 - [Database Structure](#database-structure)
 - [Getting Started](#getting-started)
 - [Sample Data](#sample-data)
 - [SQL Concepts Covered](#sql-concepts-covered)
 - [File Descriptions](#file-descriptions)
-- [Author](#author)
 
+## Authors
+
+* Sabrina Kandeh
+* Ameynor Salma Kamara
+* Alfreda Victoria Dumbuya
 
 ## Project Overview
 
@@ -28,7 +33,7 @@ The project is split into two database schemas:
 
 ## Database Structure
 
-### Schema 1 — `public_health_clinic`
+### Schema 1 - `public_health_clinic`
 
 ```
 Patient
@@ -48,7 +53,7 @@ Health_Worker
 | `Treatment` | Medicine and cost linked to each diagnosis |
 
 
-### Schema 2 — `public_health_clinic_db`
+### Schema 2 - `public_health_clinic_db`
 
 ```
 Departments
@@ -108,16 +113,16 @@ Each database includes **20 records** per table. Data reflects realistic Sierra 
 ## SQL Concepts Covered
 
 ### Data Definition (DDL)
-- `CREATE DATABASE`, `CREATE TABLE`
+- `CREATE DATABASE` & `CREATE TABLE`
 - `RENAME TABLE`, `ALTER TABLE ... CHANGE` (rename column)
 - `ALTER TABLE ... ADD CONSTRAINT` (CHECK constraint)
 - `PRIMARY KEY`, `FOREIGN KEY`, `AUTO_INCREMENT`
 - `ENUM`, `DECIMAL`, `DATE`, `TEXT`
 
 ### Data Manipulation (DML)
-- `INSERT INTO` — adding records
-- `UPDATE ... SET ... WHERE` — modifying records
-- `DELETE FROM ... WHERE` — removing records
+- `INSERT INTO` - adding records
+- `UPDATE ... SET ... WHERE` - modifying records
+- `DELETE FROM ... WHERE` - removing records
 
 ### Data Query (DQL)
 | Concept | Example Use |
@@ -148,13 +153,8 @@ Each database includes **20 records** per table. Data reflects realistic Sierra 
 
 | File | Description |
 |---|---|
-| `public_health_clinic.sql` | Full script for Schema 1 — patients, appointments, diagnoses, treatments |
-| `public_health_clinic_db_restructured.sql` | Full script for Schema 2 — doctors, departments, lab tests, payments, prescriptions |
+| `public_health_clinic.sql` | Full script for Schema 1 - patients, appointments, diagnoses, treatments |
+| `public_health_clinic_db_restructured.sql` | Full script for Schema 2 - doctors, departments, lab tests, payments, prescriptions |
 | `README.md` | Project documentation |
-
-
-## Authors
-
-* Sabrina Kandeh
-* Ameynor Salma Kamara
-* Alfreda Victoria Dumbuya
+ 
+ 
