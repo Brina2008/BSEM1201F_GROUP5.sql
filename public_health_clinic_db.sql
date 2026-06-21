@@ -5,97 +5,102 @@ CREATE DATABASE public_health_clinic_db;
 
 -- CREATE TABLES
 
-CREATE TABLE `departments` (
-  `department_id`   INT(11)      NOT NULL AUTO_INCREMENT,
-  `department_name` VARCHAR(100) NOT NULL,
-  `description`     VARCHAR(255) NOT NULL,
-  PRIMARY KEY (`department_id`)
+CREATE TABLE departments (
+    department_id   INT PRIMARY KEY  AUTO_INCREMENTNOT NULL,
+    department_name VARCHAR(100)                       NOT NULL,
+    description     VARCHAR(255)                       NOT NULL,
+
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 
-CREATE TABLE `doctors` (
-  `doctor_id`      INT(11)      NOT NULL AUTO_INCREMENT,
-  `first_name`     VARCHAR(50)  NOT NULL,
-  `last_name`      VARCHAR(50)  NOT NULL,
-  `specialization` VARCHAR(100) NOT NULL,
-  `phone_number`   VARCHAR(20)  NOT NULL,
-  `department_id`  INT(11)      NOT NULL,
-  PRIMARY KEY (`doctor_id`),
-  FOREIGN KEY (`department_id`) REFERENCES `departments` (`department_id`)
+CREATE TABLE doctors (
+  doctor_id         INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+  department_id     INT                            NOT NULL,
+  first_name        VARCHAR(50)                    NOT NULL,
+  last_name         VARCHAR(50)                    NOT NULL,
+  specialization    VARCHAR(100)                   NOT NULL,
+  phone_number      VARCHAR(20)                    NOT NULL,
+
+  FOREIGN KEY (department_id)    REFERENCES departments (department_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 
-CREATE TABLE `patients` (
-  `patient_id`        INT(11)               NOT NULL AUTO_INCREMENT,
-  `first_name`        VARCHAR(50)           NOT NULL,
-  `last_name`         VARCHAR(50)           NOT NULL,
-  `gender`            ENUM('Male','Female') NOT NULL,
-  `date_of_birth`     DATE                  NOT NULL,
-  `phone_number`      VARCHAR(20)           NOT NULL,
-  `address`           VARCHAR(255)          NOT NULL,
-  `registration_date` DATE                  DEFAULT CURDATE(),
-  PRIMARY KEY (`patient_id`)
+CREATE TABLE patients (
+  patient_id            INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+  first_name            VARCHAR(50)                    NOT NULL,
+  last_name             VARCHAR(50)                    NOT NULL,
+  gender                ENUM('Male','Female')          NOT NULL,
+  date_of_birth         DATE                           NOT NULL,
+  phone_number          VARCHAR(20)                    NOT NULL,
+  address               VARCHAR(255)                   NOT NULL,
+  registration_date     DATE                  DEFAULT CURDATE(),
+
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 
-CREATE TABLE `appointments` (
-  `appointment_id`   INT(11)                                   NOT NULL AUTO_INCREMENT,
-  `patient_id`       INT(11)                                   NOT NULL,
-  `doctor_id`        INT(11)                                   NOT NULL,
-  `appointment_date` DATETIME                                  NOT NULL,
-  `status`           ENUM('Scheduled','Completed','Cancelled') DEFAULT 'Scheduled',
-  PRIMARY KEY (`appointment_id`),
-  FOREIGN KEY (`patient_id`) REFERENCES `patients` (`patient_id`),
-  FOREIGN KEY (`doctor_id`)  REFERENCES `doctors`  (`doctor_id`)
+CREATE TABLE appointments (
+  appointment_id    INT    PRIMARY KEY  AUTO_INCREMENT NOT NULL,
+  patient_id        INT                                NOT NULL,
+  doctor_id         INT                                NOT NULL,
+  appointment_date  DATETIME                           NOT NULL,
+  status    ENUM(Scheduled,Completed,Cancelled) DEFAULT Scheduled,
+
+  FOREIGN KEY (patient_id) REFERENCES patients (patient_id),
+  FOREIGN KEY (doctor_id)  REFERENCES doctors  (doctor_id)
+
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 
-CREATE TABLE `medical_records` (
-  `record_id`  INT(11)       NOT NULL AUTO_INCREMENT,
-  `patient_id` INT(11)       NOT NULL,
-  `doctor_id`  INT(11)       NOT NULL,
-  `diagnosis`  VARCHAR(255)  NOT NULL,
-  `symptoms`   VARCHAR(500)  NOT NULL,
-  `treatment`  VARCHAR(500)  NOT NULL,
-  `visit_date` DATE          NOT NULL,
-  `notes`      VARCHAR(1000) DEFAULT NULL,
-  PRIMARY KEY (`record_id`),
-  FOREIGN KEY (`patient_id`) REFERENCES `patients` (`patient_id`),
-  FOREIGN KEY (`doctor_id`)  REFERENCES `doctors`  (`doctor_id`)
+CREATE TABLE medical_records (
+  record_id     INT   PRIMARY KEY  AUTO_INCREMENT NOT NULL,
+  patient_id    INT                               NOT NULL,
+  doctor_id     INT                               NOT NULL,
+  diagnosis     VARCHAR(255)                      NOT NULL,
+  symptoms      VARCHAR(500)                      NOT NULL,
+  treatment     VARCHAR(500)                      NOT NULL,
+  visit_date    DATE                              NOT NULL,
+  notes         TEXT                           DEFAULT NULL,
+
+  FOREIGN KEY (patient_id) REFERENCES patients (patient_id),
+  FOREIGN KEY (doctor_id)  REFERENCES doctors  (doctor_id)
+
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 
-CREATE TABLE `lab_test` (
-  `test_id`     INT(11)      NOT NULL AUTO_INCREMENT,
-  `patient_id`  INT(11)      NOT NULL,
-  `doctor_id`   INT(11)      NOT NULL,
-  `test_name`   VARCHAR(255) NOT NULL,
-  `test_result` VARCHAR(255) NOT NULL,
-  `test_date`   DATE         NOT NULL,
-  PRIMARY KEY (`test_id`),
-  FOREIGN KEY (`patient_id`) REFERENCES `patients` (`patient_id`),
-  FOREIGN KEY (`doctor_id`)  REFERENCES `doctors`  (`doctor_id`)
+CREATE TABLE lab_test (
+  test_id        INT       PRIMARY KEY  AUTO_INCREMENT  NOT NULL,
+  patient_id     INT(11)                                NOT NULL,
+  doctor_id      INT(11)                                NOT NULL,
+  test_name      VARCHAR(255)                           NOT NULL,
+  test_result    VARCHAR(255)                           NOT NULL,
+  test_date      DATE                                   NOT NULL, 
+
+  FOREIGN KEY (patient_id) REFERENCES patients (patient_id),
+  FOREIGN KEY (doctor_id)  REFERENCES doctors  (doctor_id)
+
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 
-CREATE TABLE `payments` (
-  `payment_id`   INT(11)       NOT NULL AUTO_INCREMENT,
-  `patient_id`   INT(11)       NOT NULL,
-  `amount`       DECIMAL(10,2) NOT NULL,
-  `payment_date` DATE          NOT NULL,
-  PRIMARY KEY (`payment_id`),
-  FOREIGN KEY (`patient_id`) REFERENCES `patients` (`patient_id`)
+CREATE TABLE payments (
+  payment_id      INT     PRIMARY KEY  AUTO_INCREMENT  NOT NULL,
+  patient_id      INT                                  NOT NULL,
+  amount          DECIMAL(10,2)                        NOT NULL,
+  payment_date    DATE                                 NOT NULL,
+
+  FOREIGN KEY (patient_id) REFERENCES patients (patient_id)
+
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 
-CREATE TABLE `prescriptions` (
-  `prescription_id` INT(11)      NOT NULL AUTO_INCREMENT,
-  `record_id`       INT(11)      NOT NULL,
-  `medication_name` VARCHAR(100) NOT NULL,
-  `dosage`          VARCHAR(100) NOT NULL,
-  `duration`        VARCHAR(50)  NOT NULL,
-  PRIMARY KEY (`prescription_id`),
-  FOREIGN KEY (`record_id`) REFERENCES `medical_records` (`record_id`)
+CREATE TABLE prescriptions (
+  prescription_id  INT  PRIMARY KEY  AUTO_INCREMENT  NOT NULL,
+  record_id        INT                               NOT NULL,
+  medication_name  VARCHAR(100)                      NOT NULL,
+  dosage           VARCHAR(100)                      NOT NULL,
+  duration         VARCHAR(50)                       NOT NULL,
+
+  FOREIGN KEY (record_id) REFERENCES medical_records (record_id)
+
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 
