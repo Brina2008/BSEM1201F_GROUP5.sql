@@ -109,7 +109,7 @@ CREATE TABLE prescriptions (
 
 RENAME TABLE lab_test TO laboratory_tests;
 
-SELECT * FROM laboratory_tests;   -- see table after rename (empty for now)
+SELECT * FROM laboratory_tests; 
 
 
 -- RENAME A COLUMN
@@ -118,8 +118,7 @@ SELECT * FROM laboratory_tests;   -- see table after rename (empty for now)
 ALTER TABLE appointments
 CHANGE status appointment_status ENUM('Scheduled','Completed','Cancelled') DEFAULT 'Scheduled';
 
-SELECT * FROM appointments;       -- see column name change (empty for now)
-
+SELECT * FROM appointments; 
 
 -- ADD A CONSTRAINT
 -- Add a CHECK constraint: amount must be > 0
@@ -132,7 +131,7 @@ SELECT * FROM payments;           -- confirm constraint added (empty for now)
 
 -- INSERT SAMPLE DATA - DEPARTMENTS
 
-INSERT INTO `departments` (`department_id`, `department_name`, `description`) VALUES
+INSERT INTO departments (department_id, department_name, description) VALUES
 (1,  'General OPD',        'General outpatient consultations'),
 (2,  'Maternity',          'Pregnancy and childbirth services'),
 (3,  'Laboratory',         'Medical testing services'),
@@ -159,7 +158,7 @@ SELECT * FROM departments;
 
 -- INSERT SAMPLE DATA - DOCTORS
 
-INSERT INTO `doctors` (`doctor_id`, `first_name`, `last_name`, `specialization`, `phone_number`, `department_id`) VALUES
+INSERT INTO doctors (doctor_id, first_name, last_name, specialization, phone_number, department_id) VALUES
 (1,  'Samuel',     'Kamara',    'General Practitioner',        '076111111', 1),
 (2,  'Aminata',    'Bangura',   'Gynecologist',                '077222222', 2),
 (3,  'Ibrahim',    'Kanu',      'Laboratory Specialist',       '078333333', 3),
@@ -186,7 +185,7 @@ SELECT * FROM doctors;
 
 -- INSERT SAMPLE DATA — PATIENTS
 
-INSERT INTO `patients` (`patient_id`, `first_name`, `last_name`, `gender`, `date_of_birth`, `phone_number`, `address`, `registration_date`) VALUES
+INSERT INTO patients (patient_id, first_name, last_name, gender, date_of_birth, phone_number, address, registration_date) VALUES
 (1,  'Mohamed',    'Kamara',    'Male',   '1998-06-15', '076111111', 'Freetown',         '2026-06-01'),
 (2,  'Fatmata',    'Sesay',     'Female', '2000-03-10', '076222222', 'Lumley, Freetown', '2026-06-01'),
 (3,  'Ibrahim',    'Koroma',    'Male',   '1995-08-20', '078345678', 'Kenema',           '2026-06-02'),
@@ -213,7 +212,7 @@ SELECT * FROM patients;
 
 -- INSERT SAMPLE DATA — APPOINTMENTS
 
-INSERT INTO `appointments` (`appointment_id`, `patient_id`, `doctor_id`, `appointment_date`, `appointment_status`) VALUES
+INSERT INTO appointments (appointment_id, patient_id, doctor_id, appointment_date, appointment_status) VALUES
 (1,  1,  1,  '2026-06-10 09:00:00', 'Scheduled'),
 (2,  2,  2,  '2026-06-10 10:00:00', 'Completed'),
 (3,  3,  3,  '2026-06-11 11:00:00', 'Scheduled'),
@@ -238,8 +237,7 @@ INSERT INTO `appointments` (`appointment_id`, `patient_id`, `doctor_id`, `appoin
 SELECT * FROM appointments;
 
 
--- UPDATE & DELETE EXAMPLES - APPOINTMENTS
-
+-- UPDATE & DELETE EXAMPLES - APPOINTMENTS   
 -- UPDATE (first time)
 UPDATE appointments
 SET appointment_status = 'Completed'
@@ -254,11 +252,12 @@ WHERE appointment_id = 3;
 
 SELECT * FROM appointments;
 
--- INSERT then DELETE (first time)
+-- INSERT then DELETE (This action was performed twice to showcase the database functionality)
 INSERT INTO appointments (patient_id, doctor_id, appointment_date, appointment_status)
 VALUES (1, 1, '2026-07-10 09:00:00', 'Scheduled');
 
 SELECT * FROM appointments;
+
 
 DELETE FROM appointments
 WHERE appointment_date = '2026-07-10 09:00:00';
@@ -277,9 +276,10 @@ WHERE appointment_date = '2026-07-15 10:00:00';
 SELECT * FROM appointments;
 
 
+
 -- INSERT SAMPLE DATA — MEDICAL RECORDS
 
-INSERT INTO `medical_records` (`record_id`, `patient_id`, `doctor_id`, `diagnosis`, `symptoms`, `treatment`, `visit_date`, `notes`) VALUES
+INSERT INTO medical_records (record_id, patient_id, doctor_id, diagnosis, symptoms, treatment, visit_date, notes) VALUES
 (1,  1,  1,  'Malaria',           'Fever, Headache',          'Coartem',             '2026-06-10', 'Patient advised to rest'),
 (2,  2,  2,  'Pregnancy Checkup', 'Routine ANC',              'Prenatal Vitamins',   '2026-06-10', 'Mother healthy'),
 (3,  3,  3,  'Typhoid',           'Fever, Abdominal Pain',    'Ciprofloxacin',       '2026-06-11', 'Increase fluids'),
@@ -304,21 +304,21 @@ INSERT INTO `medical_records` (`record_id`, `patient_id`, `doctor_id`, `diagnosi
 SELECT * FROM medical_records;
 
 
--- UPDATE & DELETE EXAMPLES - MEDICAL RECORDS
 
--- UPDATE (first time)
+-- UPDATE & DELETE EXAMPLES - MEDICAL RECORDS 
+-- UPDATE
 UPDATE medical_records
 SET notes = 'Patient advised to rest and increase fluid intake.'
 WHERE record_id = 1;
 
 SELECT * FROM medical_records;
-
--- UPDATE (second time)
+   
 UPDATE medical_records
 SET notes = 'Patient advised to rest, increase fluid intake, and return in 3 days.'
 WHERE record_id = 1;
 
 SELECT * FROM medical_records;
+
 
 -- INSERT then DELETE (first time)
 INSERT INTO medical_records (patient_id, doctor_id, diagnosis, symptoms, treatment, visit_date, notes)
@@ -343,9 +343,9 @@ WHERE diagnosis = 'Sample Diagnosis';
 SELECT * FROM medical_records;
 
 
--- INSERT SAMPLE DATA - LABORATORY TESTS
 
-INSERT INTO `laboratory_tests` (`test_id`, `patient_id`, `doctor_id`, `test_name`, `test_result`, `test_date`) VALUES
+-- INSERT SAMPLE DATA - LABORATORY TESTS   
+INSERT INTO laboratory_tests (test_id, patient_id, doctor_id test_name, test_result, test_date) VALUES
 (1,  1,  1,  'Malaria Test',            'Positive',          '2026-06-10'),
 (2,  2,  2,  'Blood Pressure Test',     'Normal',            '2026-06-10'),
 (3,  3,  3,  'Typhoid Test',            'Positive',          '2026-06-11'),
@@ -370,9 +370,8 @@ INSERT INTO `laboratory_tests` (`test_id`, `patient_id`, `doctor_id`, `test_name
 SELECT * FROM laboratory_tests;
 
 
--- INSERT SAMPLE DATA — PAYMENTS
-
-INSERT INTO `payments` (`payment_id`, `patient_id`, `amount`, `payment_date`) VALUES
+-- INSERT SAMPLE DATA — PAYMENTS 
+INSERT INTO payments (payment_id, patient_id, amount, payment_date) VALUES
 (1,  1,  150.00, '2026-06-10'),
 (2,  2,  200.00, '2026-06-10'),
 (3,  3,  175.00, '2026-06-11'),
@@ -399,7 +398,7 @@ SELECT * FROM payments;
 
 -- UPDATE & DELETE EXAMPLES - PAYMENTS
 
--- UPDATE (first time)
+-- UPDATE
 UPDATE payments
 SET amount = 160.00
 WHERE payment_id = 1;
@@ -413,7 +412,7 @@ WHERE payment_id = 1;
 
 SELECT * FROM payments;
 
--- INSERT then DELETE (first time)
+-- INSERT then DELETE
 INSERT INTO payments (patient_id, amount, payment_date)
 VALUES (1, 50.00, '2026-07-01');
 
@@ -438,7 +437,7 @@ SELECT * FROM payments;
 
 -- INSERT SAMPLE DATA - PRESCRIPTIONS
 
-INSERT INTO `prescriptions` (`prescription_id`, `record_id`, `medication_name`, `dosage`, `duration`) VALUES
+INSERT INTO prescriptions (prescription_id, record_id, medication_name, dosage, duration) VALUES
 (1,  1,  'Coartem',              '2 Tablets Twice Daily',       '3 Days'),
 (2,  2,  'Prenatal Vitamins',    '1 Tablet Daily',              '30 Days'),
 (3,  3,  'Ciprofloxacin',        '500mg Twice Daily',           '7 Days'),
@@ -463,15 +462,14 @@ INSERT INTO `prescriptions` (`prescription_id`, `record_id`, `medication_name`, 
 SELECT * FROM prescriptions;
 
 
--- HOW TO SEARCH FOR DATA IN A TABLE (Retrieve all records from a table)
-
+-- HOW TO SEARCH FOR DATA IN A TABLE (It retrieve all records from a table)   
 SELECT * FROM patients;
 
 SELECT * FROM payments;
 
 
--- HOW TO RETRIEVE DATA FROM A SPECIFIC COLUMN
 
+-- HOW TO RETRIEVE DATA FROM A SPECIFIC COLUMN 
 -- One column
 SELECT first_name FROM patients;
 
@@ -510,7 +508,7 @@ AND payment_date >= '2026-06-12';
 
 -- LOGICAL OPERATORS
 
--- OR operator (first time)
+-- OR operator
 SELECT * FROM patients
 WHERE address = 'Freetown'
 OR address = 'Makeni';
@@ -520,7 +518,7 @@ SELECT * FROM payments
 WHERE amount < 150.00
 OR amount > 450.00;
 
--- AND operator (first time)
+-- AND operator
 SELECT * FROM appointments
 WHERE doctor_id = 1
 AND appointment_date >= '2026-06-10';
@@ -530,7 +528,7 @@ SELECT * FROM payments
 WHERE amount >= 200.00
 AND amount <= 400.00;
 
--- BETWEEN operator (first time)
+-- BETWEEN operator
 SELECT * FROM appointments
 WHERE appointment_date
 BETWEEN '2026-06-10' AND '2026-06-14';
@@ -565,6 +563,7 @@ SELECT * FROM medical_records
 WHERE notes LIKE '%fever%';
 
 
+
 -- SEARCH FOR A RECORD IN A LIST - IN OPERATOR
 
 SELECT * FROM patients
@@ -593,9 +592,8 @@ SELECT * FROM patients
 LIMIT 10;
 
 
--- ORDER BY - SORT RESULTS
-
--- Ascending (first time)
+-- ORDER BY - SORT RESULTS   
+-- Ascending
 SELECT * FROM payments
 ORDER BY amount ASC;
 
@@ -603,7 +601,7 @@ ORDER BY amount ASC;
 SELECT * FROM patients
 ORDER BY last_name ASC;
 
--- Descending (first time)
+-- Descending
 SELECT * FROM payments
 ORDER BY amount DESC;
 
